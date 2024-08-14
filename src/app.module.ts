@@ -7,13 +7,14 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from '@modules/auth/auth.module';
 import { JwtAuthGuard } from '@lib/guards/jwt-auth.guard';
 import featureConfig from '@config/feature.config';
+import mongooseAsyncConfig from '@config/mongoose.config';
 
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true, load: [featureConfig] }),
     HttpModule,
     AuthModule,
-    MongooseModule.forRoot('mongodb://localhost:27017/test'),
+    MongooseModule.forRootAsync(mongooseAsyncConfig),
   ],
   controllers: [],
   providers: [
