@@ -2,7 +2,7 @@
 * Run using Node 20 LTS
 
 ## Setup
-* The APNS module and Apple AUTH requires the `APPLE_SIGNING_KEY`. So if Apple integration is not something that will be used, remove the modules.
+* Copy `.env.sample` and rename it as `.env`. Populate the `MONGODB_URI`
 
 ## Installation
 

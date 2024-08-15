@@ -13,7 +13,6 @@ import { JwtStrategy } from './lib/jwt.strategy';
 import { RegisterService } from './services/register.service';
 import { RegisterController } from './controllers/register.controller';
 import { UserService } from './services/user.service';
-import { UserController } from './controllers/user.controller';
 import { User, UserSchema } from './schemas/user.schema';
 
 @Module({
@@ -23,7 +22,7 @@ import { User, UserSchema } from './schemas/user.schema';
     MailModule,
     MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
   ],
-  controllers: [AuthController, RegisterController, UserController],
+  controllers: [AuthController, RegisterController],
   providers: [AuthService, RegisterService, LocalStrategy, JwtStrategy, UserService],
   exports: [AuthService, RegisterService],
 })
