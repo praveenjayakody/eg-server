@@ -30,6 +30,10 @@ async function bootstrap() {
   // transform response
   app.useGlobalInterceptors(new ClassSerializerInterceptor(app.get(Reflector)));
 
+  // enable CORS
+  // INFO: add proper CORS to accept only known origins in production!
+  app.enableCors({ origin: true, credentials: true });
+
   await app.listen(process.env.PORT || 3000);
   logger.log(`Running on port ${process.env.PORT || 3000}`);
 }
