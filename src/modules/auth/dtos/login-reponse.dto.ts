@@ -1,22 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 
-import { User } from '../schemas/user.schema';
+import { ApiUser } from '@lib/dtos/ApiUser.dto';
 
 export class LoginResponseDTO {
   @ApiProperty({
     description: 'User',
-    type: User,
+    type: ApiUser,
   })
-  user: User;
-
-  @ApiProperty({
-    description: 'If the user was newly registered',
-    type: Boolean,
-    example: false,
-  })
-  @IsString()
-  isNewUser: boolean;
+  user: ApiUser;
 
   @ApiProperty({
     description: 'Access token',
