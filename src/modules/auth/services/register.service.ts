@@ -19,7 +19,7 @@ export class RegisterService {
       if (user) {
         // INFO: existing user
         this.logger.warn('Email already exists');
-        throw new BadRequestException('That email already exists');
+        throw new BadRequestException('That email is taken');
       } else {
         // INFO: new user
         const hashedPassword = await Password.toHash(newPassword);
