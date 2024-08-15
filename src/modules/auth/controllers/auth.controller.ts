@@ -36,16 +36,16 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @ApiOperation({ summary: 'Login' })
   @ApiResponse({ status: 200, type: LoginResponseDTO })
-  @Post('/login')
+  @Post('login')
   async login(@Body() body: AuthDto, @Request() req) {
     return this.authService.login(req.user);
   }
 
-  @ApiOperation({ summary: 'Protected route' })
+  @ApiOperation({ summary: 'Authenticate token' })
   @ApiResponse({ status: 200 })
   @DefaultAuth()
-  @Get('protected')
-  async protectedRoute(@CurrentUser() user) {
-    return user;
+  @Get('iam')
+  async iam(@Request() req) {
+    return this.authService.validateToken(req.user.email);
   }
 }

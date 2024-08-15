@@ -1,7 +1,6 @@
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { PassportStrategy } from '@nestjs/passport';
 import { Injectable } from '@nestjs/common';
-import { isAfter } from 'date-fns/isAfter';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
@@ -18,13 +17,12 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any) {
-    const userId = payload.sub;
+    const email = payload.email;
 
-    const user = await this.userModel.findOne({ where: { id: userId } });
-    const issuedAt = new Date(payload.iat * 1000);
+    const user = await this.userModel.findOne({ email });
 
-    if ((user && !user.passwordUpdatedAt) || (user && isAfter(issuedAt, user.passwordUpdatedAt))) {
-      return { userId, username: payload.username };
+    if (user) {
+      return { email };
     } else {
       return null;
     }
