@@ -1,5 +1,6 @@
+import { isStrongPasswordCustom } from '@/lib/decorators/isStrongPasswordCustom';
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, IsStrongPassword } from 'class-validator';
+import { IsEmail, IsNotEmpty } from 'class-validator';
 
 export class RegisterDto {
   @ApiProperty({
@@ -25,12 +26,6 @@ export class RegisterDto {
     example: 'In1@aaaaaaaa',
   })
   @IsNotEmpty()
-  @IsStrongPassword({
-    minLength: 8,
-    minSymbols: 1,
-    minNumbers: 1,
-    minLowercase: 1,
-    minUppercase: 1, // TODO: update password validation for custom rules
-  })
+  @isStrongPasswordCustom()
   newPassword: string;
 }

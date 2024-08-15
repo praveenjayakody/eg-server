@@ -4,7 +4,6 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LocalAuthGuard } from '@lib/guards/local-auth.guard';
 import { DefaultAuth } from '@lib/decorators/DefaultAuth.decorator';
 import { Public } from '@lib/decorators/Public.decorator';
-import { CurrentUser } from '@lib/decorators/CurrentUser.decorator';
 
 import { AuthService } from '../services/auth.service';
 import { AuthDto } from '../dtos/auth.dto';

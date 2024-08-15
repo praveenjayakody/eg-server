@@ -14,14 +14,6 @@ export class User {
   id: number;
 
   @ApiProperty({
-    description: 'If user is activated',
-    type: Boolean,
-    example: false,
-  })
-  @Prop()
-  activated: boolean;
-
-  @ApiProperty({
     description: 'User email',
     type: String,
     example: 'user@example.com',
@@ -49,14 +41,6 @@ export class User {
   })
   @Prop({ nullable: true })
   role: string;
-
-  @ApiProperty({
-    description: 'country code',
-    type: String,
-    example: 'LK',
-  })
-  @Prop({ nullable: true })
-  country: string;
 
   @ApiProperty({
     description: 'password last updated',
