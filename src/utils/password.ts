@@ -1,6 +1,3 @@
-/**
- * Adapted from TZ
- */
 import { promisify } from 'util';
 import { scrypt, randomBytes, randomUUID } from 'crypto';
 

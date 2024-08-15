@@ -1,26 +1,38 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { BadRequestException, Injectable, InternalServerErrorException, Logger } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
-import { MailService } from '@providers/mailer';
+import { Password } from '@utils/password';
 
-import { UserService } from './user.service';
 import { User } from '../schemas/user.schema';
+import { RegisterDto } from '../dtos/register.dto';
 
 @Injectable()
 export class RegisterService {
   private readonly logger = new Logger(RegisterService.name);
 
-  private verificationValidityPeriod = 24; // INFO: validity of verification link in hours
+  constructor(@InjectModel(User.name) private readonly userModel: Model<User>) {}
 
-  constructor(
-    private mailService: MailService,
-    private userService: UserService,
-    @InjectModel(User.name) private readonly userModel: Model<User>,
-  ) {}
-
-  async registerEmail(email: string) {
-    const user = await this.userModel.find({ email });
-    console.log(user);
+  async register({ email, newPassword, fullname }: RegisterDto) {
+    try {
+      const user = await this.userModel.findOne({ email });
+      if (user) {
+        // INFO: existing user
+        this.logger.warn('Email already exists');
+        throw new BadRequestException('That email already exists');
+      } else {
+        // INFO: new user
+        const hashedPassword = await Password.toHash(newPassword);
+        await this.userModel.create({ email, password: hashedPassword, fullname });
+        return 'Successfully registered';
+      }
+    } catch (err) {
+      this.logger.error(err);
+      if (err) {
+        throw err;
+      } else {
+        throw new InternalServerErrorException();
+      }
+    }
   }
 }
